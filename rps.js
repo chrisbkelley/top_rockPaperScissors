@@ -14,7 +14,7 @@ function computerPlay(){
 }
 
 function playRound(playerSelection, computerSelection){
-    //let outcome = '';
+    playerSelection = playerSelection.toLowerCase();
     let loseStatement = `You lose! ${computerSelection} beats ${playerSelection}`;
     let winStatement = `You win! ${playerSelection} beats ${computerSelection}`;
     let tieStatement = `Tie! Both players chose ${computerSelection}`;
@@ -34,4 +34,38 @@ function playRound(playerSelection, computerSelection){
     }
 
 };
+
+function game(){
+    let playerScore = 0;
+    let computerScore = 0;
+    let loseStatement = `You lose!\nComputer score: ${computerScore}\nPlayer score: ${playerScore}`;
+    let winStatement = `You win!\nPlayer score: ${playerScore} \nComputer score: ${computerScore}`;
+    let tieStatement = `Tie! Both players scored ${computerScore}`;
+    for (let i = 0; i < 5; i++) {
+        let playerChoice = prompt('Choose rock, paper or scissors');
+        let result = '';
+        let winPattern = /win/g;
+        let losePattern = /lose/g;
+
+        result = playRound(playerChoice, computerPlay());
+        console.log(result);
+        if (winPattern.test(result) === True){
+            playerScore++;
+        } else if losePattern.test(result )=== True){
+            computerScore++;
+        } else {
+            continue;
+        }
+
+    };
+    if (playerScore == computerScore) {
+        console.log(tieStatement);
+    } else if (playerScore > computerScore) {
+        console.log(winStatement);
+    } else if (playerScore < computerScore) {
+        console.log(loseStatement);
+    } else [
+        console.log('Something unexpected happened!')
+    ]
+}
 
