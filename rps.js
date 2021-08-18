@@ -49,13 +49,15 @@ function game(){
 
         result = playRound(playerChoice, computerPlay());
         console.log(result);
-        if (winPattern.test(result) === True){
+        if (winPattern.test(result) === true){
             playerScore++;
-        } else if losePattern.test(result )=== True){
+        } else if (losePattern.test(result) === true){
             computerScore++;
         } else {
             continue;
         }
+        //remove this after debugging
+        console.log(`Computer score: ${computerScore}\nPlayer score: ${playerScore}`);
 
     };
     if (playerScore == computerScore) {
@@ -64,8 +66,9 @@ function game(){
         console.log(winStatement);
     } else if (playerScore < computerScore) {
         console.log(loseStatement);
-    } else [
-        console.log('Something unexpected happened!')
-    ]
+    } else {
+        console.log('Something unexpected happened!');
+    }
+    
 }
 
