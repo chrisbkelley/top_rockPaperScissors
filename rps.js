@@ -38,9 +38,7 @@ function playRound(playerSelection, computerSelection){
 function game(){
     let playerScore = 0;
     let computerScore = 0;
-    let loseStatement = `You lose!\nComputer score: ${computerScore}\nPlayer score: ${playerScore}`;
-    let winStatement = `You win!\nPlayer score: ${playerScore} \nComputer score: ${computerScore}`;
-    let tieStatement = `Tie! Both players scored ${computerScore}`;
+
     for (let i = 0; i < 5; i++) {
         let playerChoice = prompt('Choose rock, paper or scissors');
         let result = '';
@@ -56,10 +54,12 @@ function game(){
         } else {
             continue;
         }
-        //remove this after debugging
-        console.log(`Computer score: ${computerScore}\nPlayer score: ${playerScore}`);
-
     };
+
+    let loseStatement = `You lose!\nComputer score: ${computerScore}\nPlayer score: ${playerScore}`;
+    let winStatement = `You win!\nPlayer score: ${playerScore} \nComputer score: ${computerScore}`;
+    let tieStatement = `Tie! Both players scored ${computerScore}`;
+
     if (playerScore == computerScore) {
         console.log(tieStatement);
     } else if (playerScore > computerScore) {
@@ -71,4 +71,13 @@ function game(){
     }
     
 }
+
+// function to test event listener, delete this
+function hello() {
+    alert ("Hello World!");
+  };
+
+document.getElementById('btn-rock').addEventListener('click',hello);
+document.getElementById('btn-paper').addEventListener('click',hello);
+document.getElementById('btn-scissors').addEventListener('click',hello);
 
