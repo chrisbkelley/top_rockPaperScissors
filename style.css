@@ -74,6 +74,13 @@ html{
     background-color: dodgerblue;
 }
 
+.move-screen {
+    font-size: 5em;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+}
+
 #computer-screen{
     background-color: white;
     height: 25vh;
@@ -98,4 +105,13 @@ html{
 
 #footer{
     background-color: darkseagreen;
+}
+
+#screen-results{
+    background-color: white;
+    font-size: 2em;
+    text-align: center;
+    margin: 0 auto;
+    width: 60vw;
+    padding: 0px;
 }

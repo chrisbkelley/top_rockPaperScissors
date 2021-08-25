@@ -1,3 +1,7 @@
+let playerScore = 0;
+let computerScore = 0;
+let roundCount = 0;
+
 function computerPlay(){
     let cmove = '';
     // assigns a random number between 0-2
@@ -13,27 +17,89 @@ function computerPlay(){
     return cmove;
 }
 
-function playRound(playerSelection, computerSelection){
+function displayResults(results){
+    const msgContainer = document.querySelector('#footer');
+    const roundMsg = document.createElement('div');
+    
+    roundMsg.setAttribute('id', 'screen-results')
+    roundMsg.textContent = results;
+    
+    if (msgContainer.childNodes[0]){
+        msgContainer.replaceChild(roundMsg,msgContainer.childNodes[0]);
+    }else{
+        msgContainer.appendChild(roundMsg);
+    };
+};
+
+function displayMoves(player, cpu){
+    const playerScreen = document.getElementById('player-screen');
+    const computerScreen = document.getElementById('computer-screen');
+    
+    playerScreen.textContent = player;
+    computerScreen.textContent = cpu;
+
+};
+
+
+function playRound(playerSelection, computerSelection = computerPlay()){
     playerSelection = playerSelection.toLowerCase();
     let loseStatement = `You lose! ${computerSelection} beats ${playerSelection}`;
     let winStatement = `You win! ${playerSelection} beats ${computerSelection}`;
     let tieStatement = `Tie! Both players chose ${computerSelection}`;
 
+    displayMoves(playerSelection, computerSelection);
+
     if (playerSelection == computerSelection){
-        return tieStatement;
+        displayResults(tieStatement);
+        return updateScoreboard('tie');
     } else if (playerSelection == 'rock' && computerSelection == 'scissors' ||
                playerSelection == 'scissors' && computerSelection == 'paper' ||
                playerSelection == 'paper' && computerSelection == 'rock') {
-        return winStatement;
+        displayResults(winStatement);         
+        return updateScoreboard('win');
     } else if (playerSelection == 'rock' && computerSelection == 'paper' ||
                playerSelection == 'scissors' && computerSelection == 'rock' ||
                playerSelection == 'paper' && computerSelection == 'scissors') {
-        return loseStatement;
+        displayResults(loseStatement);
+        return updateScoreboard('lose');
     } else {
-        return 'Error occurred, please chose rock, paper or scissors';
+        return alert('Error occurred, please chose rock, paper or scissors');
     }
 
 };
+
+function updateScoreboard(roundResults){
+    const displayPlayerScore = document.getElementById('player-score-box');
+    const displayComputerScore = document.getElementById('computer-score-box');
+
+        if (roundResults === 'win' && roundCount !==5){
+            playerScore++;
+            displayPlayerScore.textContent = 'Score: ' + playerScore;
+            roundCount++;
+        } else if (roundResults === 'lose' && roundCount !==5){
+            computerScore++;
+            displayComputerScore.textContent = 'Score: ' + computerScore;
+            roundCount++;
+        } else if (roundResults === 'tie' && roundCount !==5){
+            roundCount++;
+        } else if (roundCount === 5) {
+            if (playerScore > computerScore){
+                displayResults('You win the game.')
+                playerScore = 0;
+                computerScore = 0;
+                roundCount = 0;
+            } else {
+                displayResults('You lose the game.')
+                playerScore = 0;
+                computerScore = 0;
+                roundCount = 0;
+            };
+        } else {
+            //noop
+            ()=>{};
+        };
+    };     
+
 
 function game(){
     let playerScore = 0;
@@ -74,10 +140,23 @@ function game(){
 
 // function to test event listener, delete this
 function hello() {
-    alert ("Hello World!");
+    let para = document.getElementById("player-screen")
+    return para.textContent += 'hello world'
   };
 
-document.getElementById('btn-rock').addEventListener('click',hello);
-document.getElementById('btn-paper').addEventListener('click',hello);
-document.getElementById('btn-scissors').addEventListener('click',hello);
+const btnRock = document.getElementById('btn-rock')
+btnRock.addEventListener('click', () => {
+    playRound('rock')
+});
 
+const btnPaper = document.getElementById('btn-paper')
+btnPaper.addEventListener('click',() => {
+    playRound('paper')
+});
+
+const btnScissors = document.getElementById('btn-scissors')
+btnScissors.addEventListener('click',() => {
+    playRound('scissors')
+});
+
+document.getElementById("player-screen").textContent = '';
