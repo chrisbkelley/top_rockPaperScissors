@@ -2,6 +2,14 @@ let playerScore = 0;
 let computerScore = 0;
 let roundCount = 0;
 
+function resetCounters(){
+    playerScore = 0;
+    computerScore = 0;
+    roundCount = 0;
+    document.getElementById('player-score-box').textContent = 'Score: 0';
+    document.getElementById('computer-score-box').textContent = 'Score: 0'
+};
+
 function computerPlay(){
     let cmove = '';
     // assigns a random number between 0-2
@@ -68,39 +76,50 @@ function playRound(playerSelection, computerSelection = computerPlay()){
 
 };
 
+function determineWinner(){
+    if (playerScore > computerScore){
+        displayResults('You win the game.');
+        resetCounters();
+    } else {
+        displayResults('You lose the game.');
+        resetCounters();
+    };
+};
+
 function updateScoreboard(roundResults){
     const displayPlayerScore = document.getElementById('player-score-box');
     const displayComputerScore = document.getElementById('computer-score-box');
 
-        if (roundResults === 'win' && roundCount !==5){
-            playerScore++;
-            displayPlayerScore.textContent = 'Score: ' + playerScore;
-            roundCount++;
-        } else if (roundResults === 'lose' && roundCount !==5){
-            computerScore++;
-            displayComputerScore.textContent = 'Score: ' + computerScore;
-            roundCount++;
-        } else if (roundResults === 'tie' && roundCount !==5){
-            roundCount++;
-        } else if (roundCount === 5) {
-            if (playerScore > computerScore){
-                displayResults('You win the game.')
-                playerScore = 0;
-                computerScore = 0;
-                roundCount = 0;
+        if (roundResults === 'win'){
+            if (roundCount < 4){
+                playerScore++;
+                displayPlayerScore.textContent = 'Score: ' + playerScore;
+                roundCount++;
             } else {
-                displayResults('You lose the game.')
-                playerScore = 0;
-                computerScore = 0;
-                roundCount = 0;
+                playerScore++
+                displayPlayerScore.textContent = 'Score: ' + playerScore;
+                determineWinner();
             };
-        } else {
-            //noop
-            ()=>{};
+        } else if (roundResults === 'lose'){
+            if (roundCount <4 ){
+                computerScore++;
+                displayComputerScore.textContent = 'Score: ' + computerScore;
+                roundCount++;
+            } else {
+                computerScore++
+                displayPlayerScore.textContent = 'Score: ' + computerScore;
+                determineWinner();                
+            };
+        } else if (roundResults === 'tie'){
+            if (roundCount < 4){
+                roundCount++;
+            } else {
+                determineWinner();
+            };
         };
     };     
 
-
+/* Leaving this in for now, if it isn't used for theodinproject, REMOVE.
 function game(){
     let playerScore = 0;
     let computerScore = 0;
@@ -137,13 +156,7 @@ function game(){
     }
     
 }
-
-// function to test event listener, delete this
-function hello() {
-    let para = document.getElementById("player-screen")
-    return para.textContent += 'hello world'
-  };
-
+*/
 const btnRock = document.getElementById('btn-rock')
 btnRock.addEventListener('click', () => {
     playRound('rock')
@@ -158,5 +171,3 @@ const btnScissors = document.getElementById('btn-scissors')
 btnScissors.addEventListener('click',() => {
     playRound('scissors')
 });
-
-document.getElementById("player-screen").textContent = '';
